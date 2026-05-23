@@ -31,22 +31,24 @@
 
 | System Name | Data Types Stored | Retention Period | Justification |
 |-------------|------------------|------------------|---------------|
-| | | | |
-| | | | |
+|Cardholder Database Server |PAN, transaction/payment related data |Unknown |Primary location for cardholder data used during payment processing. |
+|Backup System |Bakcup copies of payment releated databases and stored CHD |Unknown |May store backup copies of systems containing CHD for recovery and retention purposes |
 
 ### 2.2 Systems That PROCESS Cardholder Data
 
 | System Name | Processing Function | Data Elements | Justification |
 |-------------|---------------------|---------------|---------------|
-| | | | |
-| | | | |
+|Payment Application Server |Processes payment transaction |PAN, payment transation data |Receives and processes customer payment information during transaction handling. |
+|Tokenization Service |Replaces PAN with tokens |PAN/tokenized payment data |Processes CHD to generate tokens that reduce exposure of cardholder data. |
+|HSM Appliance | Performs encryption/cryptographic operations | Encrypted CHD,Cryptographic keys | Provides encryption and cryptographic services used to protect CHD during processing and storage |
 
 ### 2.3 Systems That TRANSMIT Cardholder Data
 
 | System Name | Transmission Path | Encryption | Justification |
 |-------------|-------------------|------------|---------------|
-| | | | |
-| | | | |
+|Payment App Server | Payment systems <-> Tokenization/HSM/Database | Internal encryption machanisms likely used | Transmits CHD between payment-processing components, tokenization services, and storage systems. |
+|Web Server |Customer -> Web Server -> Payment Application Server |Likely TLS/HTTPS |Recieves customer payment information and transmits CHD into the CDE for transaction processing. |
+|Load Balancer |Web traffic distribution to payment systems |Likely TLS/HTTPS |Distributes incoming payment-related traffic to systems involved in processing CHD. |
 
 ---
 
