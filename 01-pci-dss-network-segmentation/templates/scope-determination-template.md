@@ -4,7 +4,7 @@
 | Field | Value |
 |-------|-------|
 | Organization | MidTech Retail Solutions |
-| Assessment Date | [5/24/2026] |
+| Assessment Date | [5/26/2026] |
 | Assessor | [Yousif Al Obaidi] |
 | Version | 1.0 |
 
