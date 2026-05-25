@@ -3,7 +3,7 @@
 ## Document Information
 | Field | Value |
 |-------|-------|
-| Organization | [Company Name] |
+| Organization | MidTech Retail Solutions |
 | Assessment Date | [5/24/2026] |
 | Assessor | [Yousif Al Obaidi] |
 | Version | 1.0 |
@@ -13,12 +13,12 @@
 ## 1. Executive Summary
 
 ### Scope Statement
-[One paragraph describing the boundaries of the CDE]
+The assessment evaluated the Cardholder Data Environment supporting MidTech Retail Solutions' e-commerce payment processing infrastructure as part of PCI DSS v4.0 scope determination activities. The environment includes web servers within the DMZ,payment processing systems, tokenization and encryption services, cardholder data storage systems as well as logging, patch management, authentication, backup, and administrative services. Although network segmentation does exist between the Corporate zone and the CDE, multiple shared services such as the AD, WSUS, Backup Database, and Centrailzed Logging/SIEM had mutliple shared services, trust relationships were also identified that may weaken segmentation effectiveness and expand their PCI DSS scope.
 
 ### Key Findings
-- [ ] Finding 1
-- [ ] Finding 2
-- [ ] Finding 3
+- [ ] Shared AD, WSUS, Logging, and Backup infrastructure that weaken segmentation effectiveness between Corporate Zone and the CDE.
+- [ ] Administrative trust relationships were identified via centralized authentication and jump host access creating indirect pathways into multiple systems handling CHD.
+- [ ] Centralized logging and backup systems which expand PCI DSS scope due to potential exposure to payment related data.
 
 ### Overall Risk Rating
 [ ] Low | [ ] Medium | [ ] High | [ ] Critical
@@ -140,19 +140,19 @@
 ## 8. Recommendations
 
 ### 8.1 Immediate Actions (0-30 days)
-1. [ ]
-2. [ ]
-3. [ ]
+1. [Restrict and review privliged administrative access to CDE systems such as the Jump host and Shared AD accounts to reduce immediate admin risk. ]
+2. [Review logging configurations to ensure CHD and authentication data is not visible or accessable in logs to reduce hidden PCI scope exposure. ]
+3. [Implement MFA for all administrative access into systems within the CDE to protect against credential compromise.  ]
 
 ### 8.2 Short-Term Actions (30-90 days)
-1. [ ]
-2. [ ]
-3. [ ]
+1. [Seperating WSUS for CDE systems and corporate systems to remove segmentation weakness. ]
+2. [Isolate logging and monitoring for systhems that habdle CHD in order to reduce visiblity crossover and support operational separation ]
+3. [Harden the firewall and VLAN segmentation rules between the corporate zone and the CDE based on the trust relationships between the AD, WSUS, Jump Host, SIEM and Backup Database. ]
 
 ### 8.3 Long-Term Actions (90+ days)
-1. [ ]
-2. [ ]
-3. [ ]
+1. [Implement a dedicated AD infrastructure for CDE systems to reduce against shared authentication trust relationships ]
+2. [Deploy a dedicated backup database for CDE systems and ensure backup data is encrypted and access is restricted via Least privilege]
+3. [Conduct formal PCI DSS segmentation testing and scope validatation to ensure continued segmentation effectiveness ]
 
 ---
 
@@ -162,23 +162,27 @@ After implementing recommendations, the following risks remain:
 
 | Risk | Likelihood | Impact | Acceptance Required? |
 |------|------------|--------|---------------------|
-| | | | Yes/No |
-| | | | Yes/No |
+|Shared Auth and Admin trust relationship may still create indirect pathways into the CDE despite enforced segmentation controls |Medium |High | Yes |
+|Centralized operational services such as logging,backups, and montioring may continue to expose payment information across shared infrastructure |Low |Medium | Yes |
 
 ---
 
 ## Appendices
 
 ### A. Network Diagram
-[Insert or reference diagram]
+<img width="762" height="797" alt="image" src="https://github.com/user-attachments/assets/1947fb8e-fa10-4645-8902-b396db68653e" />
+<img width="768" height="782" alt="image" src="https://github.com/user-attachments/assets/03101849-f4db-4cad-89d2-d5172a9596b8" />
+
+
 
 ### B. Data Flow Diagram
-[Insert or reference diagram]
+<img width="522" height="661" alt="PCI-DSS drawio" src="https://github.com/user-attachments/assets/76cc87d9-ecad-47cd-ad83-8fc49740ccbb" />
+
 
 ### C. Evidence Index
 | Evidence ID | Description | Location |
 |-------------|-------------|----------|
-| | | |
+|EVID-001 |Network architecture and CHD flow analysis identifying shared services, trust relationships and segmentation weaknesses between the Corporate Zone and the CDE |Appenix B - Data Flow Diagram Figure 1 |
 
 ---
 
@@ -186,6 +190,6 @@ After implementing recommendations, the following risks remain:
 
 | Role | Name | Date | Signature |
 |------|------|------|-----------|
-| Assessor | | | |
+| Assessor |Yousif Al Obaidi |5/26/2026 |YA |
 | Reviewer | | | |
 | Approver | | | |
