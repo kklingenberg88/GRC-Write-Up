@@ -138,28 +138,6 @@ Note: I usually go one step further with a little more information on findings, 
 Giving the client insight to vulnerabilities with a solid "Why" always gives the proper push. Huge bonus if you can list an attack vector.
 
 
-### Example Key Findings
-- [X] CWE-327: Use of a Broken or Risky Cryptographic Algorithm (MD-5 hashing found)
-  Risk: High,   Score: 7.5
-
-  Business Impact: Data confidentiality and integrity if attackers decrypt weak ciphers or break obsolete hashing functions
-  Note: This increases to High/Critical if used for session tokens, password hashing, or protecting high-value regulated data
-  Remediation: Use a more secure hashing algorithm, MD-5 is known to be compromised
-  
-- [X] CWE-284: Improper Access Control (Priority 1) 
-  Risk: Critical,   Score: 9.8
-
-  Business Impact:  Allows actors to read, modify, or delete sensitive resources outside their permission scope, bypassing security boundaries
-  Note: This can permit unprivileged remote code execution, data theft, or complete system takeover
-  Remediation: Immediately review permissions and implement least privilege, separation of duties and zero trust models if possible
-  
-- [X] CWE-311: Missing Encryption of Sensitive Data
-  Risk: High,   Score 7.5
-
-  Business Impact: Exposes unencrypted sensitive information (like passwords, PII, or financial records) to network sniffing or local storage theft
-  Note: If data requires internal network access to intercept, but escalates to High or Critical if plain-text credentials or session secrets are exposed publicly
-  Remediation: Implement at rest and in-transit encryption. 
-
 ### Overall Risk Rating
 [ ] Low | [ ] Medium | [X] High | [X] Critical
 
@@ -337,6 +315,33 @@ This is reserved for high priority, and sometimes urgent Medium severity finding
 
 ### 8.3 Long-Term Actions (90+ days)
 Usually you will find most Medium and Low severity findings here. You should know and be aware of their existence, even if they're not top priority.
+
+
+### Example Key Findings
+- [X] CWE-327: Use of a Broken or Risky Cryptographic Algorithm (MD-5 hashing found)
+  Risk: High,   Score: 7.5
+
+  Business Impact: Data confidentiality and integrity if attackers decrypt weak ciphers or break obsolete hashing functions
+  Note: This increases to High/Critical if used for session tokens, password hashing, or protecting high-value regulated data
+  Remediation: Use a more secure hashing algorithm, MD-5 is known to be compromised
+  
+- [X] CWE-284: Improper Access Control 
+  Risk: Critical,   Score: 9.8
+
+  Business Impact:  Allows actors to read, modify, or delete sensitive resources outside their permission scope, bypassing security boundaries
+  Note: This can permit unprivileged remote code execution, data theft, or complete system takeover
+  Remediation: Immediately review permissions and implement least privilege, separation of duties and zero trust models if possible
+  
+- [X] CWE-311: Missing Encryption of Sensitive Data
+  Risk: High,   Score 7.5
+
+  Business Impact: Exposes unencrypted sensitive information (like passwords, PII, or financial records) to network sniffing or local storage theft
+  Note: If data requires internal network access to intercept, but escalates to High or Critical if plain-text credentials or session secrets are exposed publicly
+  Remediation: Implement at rest and in-transit encryption.
+
+  With examples in mind, where would you put the findings? Personally, with these specific gaps, I would have these in "Resolve in under 30 days".
+  Anything that can compromise your business, result in massive downtime or involve PR due to a data breach is a massive headache.
+  Whatever can result in those directly, or can lead to that outcome - Address it, priority 1.
 
 ---
 
