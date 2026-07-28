@@ -267,14 +267,20 @@ Is data transmitted encrypted?
 
 ### 5.2 Shared Services
 
-| Service | Used By CDE | Used By Non-CDE | Segmentation Effective? |
-|---------|-------------|-----------------|------------------------|
-| DNS | | | Yes/No |
-| NTP | | | Yes/No |
-| AD | | | Yes/No |
-| Backup | | | Yes/No |
-| Logging | | | Yes/No |
-| Patching | | | Yes/No |
+Shared services provide centralized enterprise functionality while supporting systems across multiple security zones. These systems do not directly participate in payment processing but are required to maintain, monitor, and administer the Cardholder Data Environment (CDE). As such, they are considered Connected-to-CDE systems and must be appropriately secured to prevent unauthorized access into the CDE.
+
+### Shared Services Included
+
+| Service | Purpose | Security Considerations |
+|----------|---------|-------------------------|
+| Active Directory | Centralized authentication and authorization | Tiered administration, least privilege, MFA |
+| DNS | Internal name resolution | Restrict zone transfers, monitor DNS queries |
+| NTP | Time synchronization | Secure time source for audit log integrity |
+| WSUS / Patch Management | Operating system and application patching | Controlled deployment and change management |
+| SIEM (Splunk) | Centralized security monitoring | Log integrity, access controls, retention |
+| Backup Server | Backup and disaster recovery | Encryption, offline copies, access restrictions |
+| Jump Host | Administrative access into secured environments | MFA, session recording, privileged access management |
+| File Services | Shared documentation and software repository | Role-based access control and auditing |
 
 ---
 
@@ -284,80 +290,70 @@ Is data transmitted encrypted?
 
 | Control | Description | Effectiveness | Evidence |
 |---------|-------------|---------------|----------|
-| Firewall rules | | Strong/Weak/None | |
-| VLAN separation | | Strong/Weak/None | |
-| Access controls | | Strong/Weak/None | |
-| Monitoring | | Strong/Weak/None | |
+| Firewall Rules | Restrict traffic between Internet, DMZ, Corporate, Management, and CDE zones to only required ports, protocols, and services. | Strong | Palo Alto firewall policies, rule review, configuration backup |
+| VLAN Separation | Separate network zones using dedicated VLANs and routed interfaces to prevent unrestricted lateral movement. | Strong | Network diagrams, switch configuration, VLAN assignments |
+| Access Controls | Restrict administrative and application access using least privilege, RBAC, MFA, and Jump Host administration. | Strong | Active Directory groups, MFA configuration, access reviews |
+| Monitoring | Monitor network traffic, authentication events, firewall logs, and administrative activity through centralized logging. | Strong | SIEM dashboards, firewall logs, Windows Event Logs, audit reports |
 
 ### 6.2 Segmentation Gaps
 
-| Gap ID | Description | Risk | Remediation |
-|--------|-------------|------|-------------|
-| GAP-001 | | High/Med/Low | |
-| GAP-002 | | High/Med/Low | |
-| GAP-003 | | High/Med/Low | |
+| Finding | Risk | Recommendation |
+|---------|------|----------------|
+| Active Directory directly authenticates CDE systems | Compromise of AD may impact the entire CDE. | Implement Tier-0 administration and privileged access controls. |
+| WSUS communicates directly with CDE assets | Patch infrastructure becomes part of PCI scope. | Restrict communication to approved update windows and firewall rules. |
+| Backup Server accesses Cardholder Data | Backup compromise may expose encrypted PAN. | Encrypt backups, restrict administrative access, perform restore testing. |
+| Jump Host provides administrative access into CDE | Administrative compromise provides direct access to sensitive systems. | Require MFA, session recording, and privileged access management. |
+| Log forwarding from CDE | Sensitive information may be inadvertently forwarded. | Verify PAN redaction and log filtering before forwarding. |
+| Shared authentication infrastructure | Authentication services become security dependencies of the CDE. | Separate privileged accounts and monitor authentication events. |
+| Firewall rule expansion over time | Excessive allow rules weaken segmentation. | Conduct periodic firewall rule recertification and cleanup. |
+| Management network trust | Administrative systems may become attack paths. | Separate management traffic and enforce least privilege. |
 
 ---
 
 ## 7. QSA Challenge Preparation
 
-### 7.1 Anticipated Questions
-
-| Area | Likely Question | Your Response | Evidence |
-|------|-----------------|---------------|----------|
-| Shared Services | | | |
-| Admin Access | | | |
-| Logging | | | |
-| Backups | | | |
+| Question | Purpose |
+|----------|---------|
+| What systems store, process, or transmit cardholder data? | Define PCI scope. |
+| What systems can directly communicate with the CDE? | Validate segmentation boundaries. |
+| How is administrative access into the CDE controlled? | Review privileged access controls. |
+| What firewall rules permit traffic into and out of the CDE? | Verify least-privilege network access. |
+| How is cardholder data encrypted in transit and at rest? | Validate cryptographic controls. |
+| How are security patches deployed and verified? | Assess vulnerability management practices. |
+| How are vulnerabilities identified, prioritized, and remediated? | Review the vulnerability management lifecycle. |
+| How are audit logs collected, protected, and reviewed? | Verify logging and monitoring controls. |
+| What evidence demonstrates that segmentation is effective? | Confirm systems outside the CDE cannot access protected assets. |
+| How are POA&Ms, exceptions, and remediation activities tracked? | Evaluate governance and continuous compliance. |
 
 ---
 
 ## 8. Recommendations
 
 ### 8.1 Immediate Actions (0-30 days)
-1. [ ]
-2. [ ]
-3. [ ]
+These would be reserved for your critical findings, you never want those to go past this timeline.
 
 ### 8.2 Short-Term Actions (30-90 days)
-1. [ ]
-2. [ ]
-3. [ ]
+This is reserved for high priority, and sometimes urgent Medium severity findings.
 
 ### 8.3 Long-Term Actions (90+ days)
-1. [ ]
-2. [ ]
-3. [ ]
+Usually you will find most Medium and Low severity findings here. You should know and be aware of their existence, even if they're not top priority.
 
 ---
 
 ## 9. Residual Risk Statement
 
 After implementing recommendations, the following risks remain:
+You can use a table like this to address residual risk - not for critical findings, but risk that remains in light of remediation
 
 | Risk | Likelihood | Impact | Acceptance Required? |
 |------|------------|--------|---------------------|
-| | | | Yes/No |
-| | | | Yes/No |
 
----
-
-## Appendices
-
-### A. Network Diagram
-[Insert or reference diagram]
-
-### B. Data Flow Diagram
-[Insert or reference diagram]
-
-### C. Evidence Index
-| Evidence ID | Description | Location |
-|-------------|-------------|----------|
-| | | |
 
 ---
 
 ## Approval
+
+Lastly we come to process tracking. This is used as a paper trail when auditing.
 
 | Role | Name | Date | Signature |
 |------|------|------|-----------|
