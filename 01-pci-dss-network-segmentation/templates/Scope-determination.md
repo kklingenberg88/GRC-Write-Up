@@ -81,7 +81,7 @@
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 ### Scope Statement
-This assessment encompasses the Emerald Retail's payment processing environment. This encompasses all associated infrastructure utilized to store, process, or transmit cardholder data. The scope includes all system components within the client environment. Systems that may be out-of-scope are separated via verified and tested network segmentation controls ensuring no direct or indirect communication paths exist to non-compliant segments. Further analysis will show us our flaws and potential areas of movement to analyze potential risk and losses.
+The purpose of this assessment is to encompass Emerald Retail's payment processing environment. This covers all associated infrastructure utilized to store, process, or transmit cardholder data with visual aids to assist. The scope will include all system components within the client environment. Systems that may be out-of-scope are separated via verified and tested network segmentation controls. This is to ensure no direct or indirect communication paths exist to non-compliant segments and pose a security risk. Further analysis will show us our flaws and potential areas of movement to analyze potential risk and losses.
 
 GRC's responsibility: What needs to be asked?
 - Which systems store, process, or transmit cardholder data?
@@ -166,9 +166,14 @@ Giving the client insight to vulnerabilities with a solid "Why" always gives the
 
 ---
 ### Common Questions: 
-Is the log server in scope? 
-What data does it receive?
+Would the log server in scope? 
+What data does the log server receive?
 Is data transmitted encrypted?
+What kind of encryption is utilized?
+
+Sometimes the results of the audit will answer some of these questions, but I find it useful to ask before, and verify.
+Perhaps client was in the wrong, and was making assumptions. You can break that habit and I've found that builds a foundation of honesty, and accountability.
+You want to be thorough, and ask the hard questions; that is your job as an auditor. 
 
 
 ## 3. Connected Systems Assessment
@@ -209,6 +214,8 @@ Is data transmitted encrypted?
 
 ### 4.1 Systems That Could Impact CDE Security
 
+This is important to know for several reasons. The biggest thing is having all of the information in front of you. You can only make sound decisions and calculate risk when you have the full picture. If you avoid or forget even a single system, that could open several doors of risk that you aren't even aware of. That's how the bad guys can win. Security isn't an annual bar to meet, it's an everyday battle. You have to win everyday, bad actors only have to win once.
+
 | Source Zone         | Source System        | Destination System     | Trust Relationship     | Data Classification              | CDE Impact                          | Security Controls                        |
 | ------------------- | -------------------- | ---------------------- | ---------------------- | -------------------------------- | ----------------------------------- | ---------------------------------------- |
 | Internet            | Customer Browser     | Web Servers            | HTTPS (443)            | Cardholder Data (PAN in transit) | **Direct**                          | TLS, WAF, Palo Alto Policy               |
@@ -230,6 +237,11 @@ Is data transmitted encrypted?
 
 ## 5. Trust Relationship Analysis
 
+This is a true gold mine in my opinion. Once you analyze and have full transparency on where risk is, you can act accordingly.
+Making informed decisions is the foundation of any security operation. Who trusts who, where could bad actors move, what is the immediate 30 day remediation plan?
+If you find this is a pattern, maybe you're even finding issues in your baseline. You wouldn't want default: immature security posture from your default image.
+I don't think anybody does, unless they're doing some sort of reverse engineering.
+
 ### 5.1 Authentication Dependencies
 
 | Trust Boundary   | Crossing Systems                         | Business Purpose    | Risk     | Notes                              |
@@ -246,6 +258,8 @@ Is data transmitted encrypted?
 ### 5.2 Shared Services
 
 Shared services provide centralized enterprise functionality while supporting systems across multiple security zones. These systems do not directly participate in payment processing but are required to maintain, monitor, and administer the Cardholder Data Environment (CDE). As such, they are considered Connected-to-CDE systems and must be appropriately secured to prevent unauthorized access into the CDE.
+
+Pretty self explanatory. Necessary technology infrastructure. 
 
 ### Shared Services Included
 
@@ -264,6 +278,11 @@ Shared services provide centralized enterprise functionality while supporting sy
 
 ## 6. Segmentation Assessment
 
+This one is usually a black and white issue. I've seen issues with a Red Team having a good time due to lack of controls. 
+Exploitation, Lateral movement, planting files and inventing a second door in. The whole nine yards.
+That's great for fostering a Purple team relationship and checking controls. What is not a fun time if you're in the SOC thinking it's a bad actor.
+The bad news is, we weren't informed. Great news is, that was deliberate to check our awareness and skills. 
+
 ### 6.1 Segmentation Controls
 
 | Control | Description | Effectiveness | Evidence |
@@ -274,6 +293,9 @@ Shared services provide centralized enterprise functionality while supporting sy
 | Monitoring | Monitor network traffic, authentication events, firewall logs, and administrative activity through centralized logging. | Strong | SIEM dashboards, firewall logs, Windows Event Logs, audit reports |
 
 ### 6.2 Segmentation Gaps
+
+Trust but verify? I take it in a different direction. I listen to the client on where the gaps are, but I'll also challenge it. 
+Try to reach those clients, access data shares and be certain that the security controls or a way in is prohibited.
 
 | Finding | Risk | Recommendation |
 |---------|------|----------------|
@@ -289,6 +311,9 @@ Shared services provide centralized enterprise functionality while supporting sy
 ---
 
 ## 7. QSA Challenge Preparation
+
+If you're going through a PCI DSS Audit, here are some fun questions for you to expect.
+If you're performing prep work on behalf of your company, take this to heart - the questions tend to be this complex.
 
 | Question | Purpose |
 |----------|---------|
@@ -306,6 +331,10 @@ Shared services provide centralized enterprise functionality while supporting sy
 ---
 
 ## 8. Recommendations
+
+GRC and Auditing is an artform.
+Technical or Interpersonal skills will get you so far, but come with both and you're going to be remembered.
+Insightful knowledge, technical capability and leadership is a recipe for success.
 
 ### 8.1 Immediate Actions (0-30 days)
 These would be reserved for your critical findings, you never want those to go past this timeline.
@@ -339,7 +368,7 @@ Usually you will find most Medium and Low severity findings here. You should kno
   Note: If data requires internal network access to intercept, but escalates to High or Critical if plain-text credentials or session secrets are exposed publicly
   Remediation: Implement at rest and in-transit encryption.
 
-  With examples in mind, where would you put the findings? Personally, with these specific gaps, I would have these in "Resolve in under 30 days".
+  With these specific gaps, I would have these in "Resolve in under 30 days".
   Anything that can compromise your business, result in massive downtime or involve PR due to a data breach is a massive headache.
   Whatever can result in those directly, or can lead to that outcome - Address it, priority 1.
 
@@ -359,6 +388,7 @@ You can use a table like this to address residual risk - not for critical findin
 ## Approval
 
 Lastly we come to process tracking. This is used as a paper trail when auditing.
+Keep it in and it's worth it's weight in gold.
 
 | Role | Name | Date | Signature |
 |------|------|------|-----------|
