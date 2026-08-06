@@ -290,29 +290,6 @@ Your SoA demonstrates strong GRC judgment if:
 □ 5-minute video walkthrough of your most controversial exclusion
 ```
 
----
-
-## SoA Summary Template
-
-```markdown
-## Statement of Applicability Summary
-
-**Organization:** CloudNative Analytics Ltd
-**ISO 27001:2022 Scope:** [Define scope]
-**SoA Version:** 1.0
-**Last Updated:** [Date]
-**Approved By:** [Name/Role]
-
-### Control Summary
-
-| Theme | Total Controls | Applicable | Excluded | Implemented | Partial | Planned |
-|-------|---------------|------------|----------|-------------|---------|---------|
-| 5. Organizational | 37 | 35 | 2 | 28 | 5 | 2 |
-| 6. People | 8 | 8 | 0 | 6 | 2 | 0 |
-| 7. Physical | 14 | 3 | 11 | 3 | 0 | 0 |
-| 8. Technological | 34 | 32 | 2 | 25 | 5 | 2 |
-| **TOTAL** | **93** | **78** | **15** | **62** | **12** | **4** |
-
 ### Key Exclusions
 
 1. **7.1-7.14 (11 controls):** Physical security - No physical premises
