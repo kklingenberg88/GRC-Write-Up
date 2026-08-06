@@ -142,13 +142,13 @@ And ones that are not implemented but should be, end up being your POAMs. This i
 
 
 ```
-
+```
 ### Phase 4: Defend Your Exclusions
 
 **Task:** For each exclusion, prepare an auditor defense document.
 
 **Example Exclusion Defense:**
-```
+````
 
 ```
 ## Control 7.3: Securing Offices, Rooms and Facilities
@@ -200,7 +200,7 @@ This exclusion should be re-evaluated if:
 
 **Task:** Where controls are excluded, show how risks are still addressed.
 And don't exclude ones you think are outside of scope, produce evidence to prove they're outside of scope.
-
+```
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    ALTERNATIVE MEASURES MAPPING                             │
@@ -250,7 +250,6 @@ And don't exclude ones you think are outside of scope, produce evidence to prove
 │   Not Applicable  Excluded from scope     Documented justification          │
 │                                           Alternative measures              │
 │                                                                             │
-│   ⚠️  NEVER mark "Implemented" if you can't produce evidence on demand     │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
