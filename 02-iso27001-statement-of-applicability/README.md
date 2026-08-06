@@ -139,29 +139,7 @@ And ones that are not implemented but should be, end up being your POAMs. This i
 3. **Implementation Status** (if applicable)
 4. **Evidence Reference** (where to find proof)
 
-**SoA Template Structure:**
 
-```
-┌──────────┬────────────────────────┬───────┬────────────────────────────────┐
-│ Control  │ Control Name           │ App?  │ Justification                  │
-├──────────┼────────────────────────┼───────┼────────────────────────────────┤
-│ 5.1      │ Policies for info sec  │ Yes   │ Required for governance        │
-│          │                        │       │ (addresses R-001, R-003)       │
-├──────────┼────────────────────────┼───────┼────────────────────────────────┤
-│ 7.1      │ Physical security      │ NO    │ EXCLUSION: No physical         │
-│          │ perimeters             │       │ premises. All operations       │
-│          │                        │       │ remote. Risk addressed by      │
-│          │                        │       │ controls 8.1 (endpoints)       │
-├──────────┼────────────────────────┼───────┼────────────────────────────────┤
-│ 7.2      │ Physical entry         │ NO    │ EXCLUSION: See 7.1. No         │
-│          │                        │       │ physical facilities to         │
-│          │                        │       │ protect.                       │
-├──────────┼────────────────────────┼───────┼────────────────────────────────┤
-│ 8.24     │ Use of cryptography    │ Yes   │ Data encryption in transit     │
-│          │                        │       │ and at rest (addresses R-001)  │
-│          │                        │       │ Via AWS KMS - not generating   │
-│          │                        │       │ own keys                       │
-└──────────┴────────────────────────┴───────┴────────────────────────────────┘
 ```
 
 ### Phase 4: Defend Your Exclusions
