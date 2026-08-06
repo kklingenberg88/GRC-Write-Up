@@ -4,6 +4,8 @@
 
 The Statement of Applicability (SoA) is one of the most misunderstood artifacts in ISO 27001. This project requires you to build a **risk-driven SoA that explicitly excludes controls and defends those exclusions**.
 
+Remember, as a GRC professional you may audit - and your career depends on transparency, radical honesty and ability to implement change while exercising sound judgement, insight and technical know how. Bonus if you can do it for both technical and non technical people as executives will often look to you as a SME.
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                      SOA: JUNIOR VS EXPERIENCED APPROACH                    │
@@ -63,6 +65,7 @@ The company has completed a risk assessment identifying these top risks:
 ### Phase 1: Understand Annex A Controls
 
 ISO 27001:2022 contains 93 controls across 4 themes. Your job is NOT to implement all 93.
+And ones that are not implemented but should be, end up being your POAMs. This is acceptable, and expected.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -216,6 +219,7 @@ This exclusion should be re-evaluated if:
 ### Phase 5: Document Alternative Measures
 
 **Task:** Where controls are excluded, show how risks are still addressed.
+And don't exclude ones you think are outside of scope, produce evidence to prove they're outside of scope.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -245,7 +249,7 @@ This exclusion should be re-evaluated if:
 
 ### Phase 6: Create Implementation Status Honesty
 
-**Task:** Don't mark controls as "implemented" when they're aspirational.
+**Task:** Same as before, don't mark controls as "implemented" when they're aspirational.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -359,4 +363,8 @@ After completing this project, answer:
 
 ---
 
-*Remember: ISO 27001 is not about maximal compliance. It's about proportionate, defensible security aligned to business reality.*
+ISO 27001 is not about maximal compliance. It's about proportionate, defensible security aligned to business reality.*
+
+
+These templates were provided by Cloud Security Guy on YouTube. 
+He is a multi-award-winning cybersecurity leader with 21+ years of experience.
