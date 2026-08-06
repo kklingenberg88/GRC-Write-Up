@@ -50,7 +50,7 @@ Remember, as a GRC professional you may audit - and your career depends on trans
 The company has completed a risk assessment identifying these top risks:
 
 | Risk ID | Risk Description | Likelihood | Impact | Risk Level |
-|---------|-----------------|------------|--------|------------|
+|---------|------------------|------------|--------|------------|
 | R-001 | Unauthorized access to customer data | Medium | High | High |
 | R-002 | Employee laptop theft/loss | Medium | Medium | Medium |
 | R-003 | Cloud misconfiguration | High | High | Critical |
@@ -86,9 +86,9 @@ And ones that are not implemented but should be, end up being your POAMs. This i
 │   └── ... and 5 more                                                        │
 │                                                                             │
 │   Theme 7: Physical (14 controls)                                           │
-│   ├── Physical security perimeters        ◄── Likely exclusion candidate   │
-│   ├── Physical entry                      ◄── Likely exclusion candidate   │
-│   ├── Securing offices                    ◄── Likely exclusion candidate   │
+│   ├── Physical security perimeters        ◄── Likely exclusion candidate    │
+│   ├── Physical entry                      ◄── Likely exclusion candidate    │
+│   ├── Securing offices                    ◄── Likely exclusion candidate    │
 │   └── ... and 11 more                                                       │
 │                                                                             │
 │   Theme 8: Technological (34 controls)                                      │
@@ -124,7 +124,7 @@ And ones that are not implemented but should be, end up being your POAMs. This i
             ┌───────────────┐       ┌───────────────────────┐
             │   Include in  │       │   Document exclusion: │
             │   SoA with    │       │   • What's excluded   │
-            │   implementation│     │   • Why excluded      │
+            │ implementation│       │   • Why excluded      │
             │   status      │       │   • Risk justification│
             └───────────────┘       │   • Alternative if any│
                                     └───────────────────────┘
@@ -146,15 +146,9 @@ And ones that are not implemented but should be, end up being your POAMs. This i
 ### Phase 4: Defend Your Exclusions
 
 **Task:** For each exclusion, prepare an auditor defense document.
+Auditors want to see evidence, not just omit what you think is in place.
+Provide both evidence and justification.
 
-**Example Exclusion Defense:**
-
-
-
-## Control 7.3: Securing Offices, Rooms and Facilities
-
-### Exclusion Statement
-This control is NOT APPLICABLE to CloudNative Analytics Ltd.
 
 ### Business Context
 CloudNative Analytics operates as a fully remote organization since its founding
@@ -165,13 +159,13 @@ in 2021. The company:
 - Employees work from home locations
 
 ### Risk Assessment Linkage
+Review this carefully, it's only an outline but you cannot stress the importance of alternative controls being documented and tracked.
+The last thing you want, is an auditor's finding showing your negligence. Especially if it is high risk, your position is at stake.
+
 Physical security risks are addressed through alternative controls:
 ```
 | Physical Risk | Alternative Control | Reference |
-|---------------|--------------------| ----------|
-| Equipment theft | 8.1 User endpoint devices | Laptop encryption, MDM |
-| Unauthorized access to data | 8.3 Information access restriction | AWS IAM, MFA |
-| Document security | 5.10 Acceptable use | No printing policy |
+|---------------|--------------------|------------|
 ```
 ### Evidence of Non-Applicability
 - Company registration showing no physical address (registered agent only)
@@ -194,13 +188,13 @@ This exclusion should be re-evaluated if:
 - Company opens physical office space
 - Company begins on-premises data processing
 - Company acquires assets requiring physical storage
-```
+``
 
 ### Phase 5: Document Alternative Measures
 
 **Task:** Where controls are excluded, show how risks are still addressed.
 And don't exclude ones you think are outside of scope, produce evidence to prove they're outside of scope.
-```
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    ALTERNATIVE MEASURES MAPPING                             │
@@ -226,6 +220,7 @@ And don't exclude ones you think are outside of scope, produce evidence to prove
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
 
 ### Phase 6: Create Implementation Status Honesty
 
@@ -303,9 +298,9 @@ All identified risks from the risk assessment are addressed:
 - R-001: Controls 5.x, 8.x, 8.y
 - R-002: Controls 8.1, 8.10
 - [Continue for all risks]
-```
 
----
+
+
 
 ## Reflection Questions
 
@@ -317,7 +312,6 @@ After completing this project, answer:
 4. Where did the risk assessment drive a different decision than your instinct?
 5. What's the cost of over-including controls (audit debt)?
 
----
 
 ISO 27001 is not about maximal compliance. It's about proportionate, defensible security aligned to business reality.*
 
