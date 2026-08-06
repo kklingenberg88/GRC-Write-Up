@@ -129,7 +129,7 @@ And ones that are not implemented but should be, end up being your POAMs. This i
             └───────────────┘       │   • Alternative if any│
                                     └───────────────────────┘
 ```
-```
+
 
 ### Phase 3: Build the Risk-Driven SoA
 
@@ -141,16 +141,16 @@ And ones that are not implemented but should be, end up being your POAMs. This i
 4. **Evidence Reference** (where to find proof)
 
 
-```
-```
+
+
 ### Phase 4: Defend Your Exclusions
 
 **Task:** For each exclusion, prepare an auditor defense document.
 
 **Example Exclusion Defense:**
-````
 
-```
+
+
 ## Control 7.3: Securing Offices, Rooms and Facilities
 
 ### Exclusion Statement
@@ -166,13 +166,13 @@ in 2021. The company:
 
 ### Risk Assessment Linkage
 Physical security risks are addressed through alternative controls:
-
+```
 | Physical Risk | Alternative Control | Reference |
 |---------------|--------------------| ----------|
 | Equipment theft | 8.1 User endpoint devices | Laptop encryption, MDM |
 | Unauthorized access to data | 8.3 Information access restriction | AWS IAM, MFA |
 | Document security | 5.10 Acceptable use | No printing policy |
-
+```
 ### Evidence of Non-Applicability
 - Company registration showing no physical address (registered agent only)
 - AWS billing showing 100% cloud infrastructure
