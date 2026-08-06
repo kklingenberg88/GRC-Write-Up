@@ -129,6 +129,7 @@ And ones that are not implemented but should be, end up being your POAMs. This i
             └───────────────┘       │   • Alternative if any│
                                     └───────────────────────┘
 ```
+```
 
 ### Phase 3: Build the Risk-Driven SoA
 
@@ -147,8 +148,9 @@ And ones that are not implemented but should be, end up being your POAMs. This i
 **Task:** For each exclusion, prepare an auditor defense document.
 
 **Example Exclusion Defense:**
+```
 
-```markdown
+```
 ## Control 7.3: Securing Offices, Rooms and Facilities
 
 ### Exclusion Statement
