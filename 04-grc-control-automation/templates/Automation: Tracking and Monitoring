@@ -60,19 +60,130 @@ This automates monitoring and has manual interaction for incident response.
 | Agent uninstall failure | Low | Low | Immediate |
 
 ### 2.3 Current Evidence Collection
-[How is evidence currently gathered and stored?]
 
 | Evidence Type | Collection Method | Storage | Issues |
 |---------------|-------------------|---------|--------|
-| | Manual/Automated | | |
-| | | | |
+| Windows Application Logs | Automatic | Cold Storage | Secondary remote backup site required |
+| Location Data Logs | Automatic | Cold Storage | Secondary remote backup site required |
 
 ---
 
 ## 3. Automation Design
 
 ### 3.1 Architecture Overview
-[Insert architecture diagram here]
+AUTOMATED ASSET MONITORING & TRACKING
+Control: PE-20 — Asset Monitoring and Tracking
+Environment: Emerald Retail
+======================================================================
+
+                         REMOTE ASSET
+                    Laptop / Mobile Device
+                             |
+                             |
+                     Location Telemetry
+                             |
+                             v
+                    +------------------+
+                    |    OpenNinja     |
+                    |  Monitoring Agent|
+                    +------------------+
+                             |
+                             |
+                     Location / Status
+                             |
+                             v
+                    +------------------+
+                    |    Geofence      |
+                    |     Engine       |
+                    +------------------+
+                             |
+                             v
+                  +------------------------+
+                  | Authorized Control Zone |
+                  |        Check            |
+                  +------------------------+
+                       |              |
+                    YES|              |NO
+                       |              |
+                       v              v
+              +----------------+   +----------------------+
+              | Normal Status  |   | Zone Breach Detected |
+              | Continue       |   | Unauthorized Movement|
+              | Monitoring     |   +----------------------+
+              +----------------+              |
+                       |                      |
+                       |                      v
+                       |             +--------------------+
+                       |             |    SOC Alert       |
+                       |             | Immediate Incident |
+                       |             |     Response       |
+                       |             +--------------------+
+                       |                      |
+                       +----------+-----------+
+                                  |
+                                  v
+                    +------------------------+
+                    |   GRC Evidence Store   |
+                    |------------------------|
+                    | Asset ID               |
+                    | Location/Event         |
+                    | Timestamp              |
+                    | Zone Status            |
+                    | Alert Status           |
+                    +------------------------+
+                                  |
+                                  v
+                    +------------------------+
+                    | Compliance Reporting   |
+                    |------------------------|
+                    | PE-20                  |
+                    | NIST SP 800-53         |
+                    | Audit Evidence         |
+                    | Monitoring Metrics     |
+                    +------------------------+
+
+
+CONTROL FLOW
+------------
+
+1. Remote asset
+   |
+   +--> Continuously provides location telemetry through OpenNinja.
+
+2. OpenNinja
+   |
+   +--> Reports current asset location and movement status.
+
+3. Geofence Engine
+   |
+   +--> Compares asset location against authorized Emerald Retail zones.
+
+4. Authorized Zone
+   |
+   +--> Asset remains within permitted boundary.
+   |
+   +--> Event is recorded as normal monitoring activity.
+
+5. Unauthorized Zone
+   |
+   +--> Zone breach is generated.
+   |
+   +--> Event is immediately forwarded to the SOC.
+
+6. SOC
+   |
+   +--> Initiates incident-response procedures.
+   |
+   +--> Determines whether the event represents a security incident.
+
+7. GRC Evidence Store
+   |
+   +--> Retains asset, event, timestamp, zone, and response information.
+
+8. Compliance Reporting
+   |
+   +--> Uses accumulated evidence to demonstrate continuous monitoring
+       and support PE-20 assessment activities.
 
 ```
 [ASCII diagram of automated solution]
@@ -82,46 +193,80 @@ This automates monitoring and has manual interaction for incident response.
 
 | Source System | Data Collected | Collection Method | Frequency |
 |---------------|----------------|-------------------|-----------|
-| | | API/Agent/File | |
-| | | | |
-| | | | |
+| Laptop1 | Location Data | Agent | At All Times |
+| Laptop2 | Location Data | Agent | At All Times |
+| Laptop3 | Location Data | Agent | At All Times |
 
 ### 3.3 Processing Logic
 
 | Rule ID | Condition | Action | Severity |
 |---------|-----------|--------|----------|
-| RULE-001 | | | |
-| RULE-002 | | | |
-| RULE-003 | | | |
+| RULE-001 | Green | No action required | None |
+| RULE-002 | Yellow | Incident response protocol | Medium |
+| RULE-003 | Red | Remote wipe of the asset | High |
 
 ### 3.4 Detection Rules (YAML Format)
 
 ```yaml
 # Rule Template
-- rule_id: RULE-001
-  name: [Rule Name]
-  description: [What this rule detects]
-  trigger: [real_time | daily_scan | weekly_scan]
+- rule_id: RULE-003
+  name: Asset Red
+  description: Asset has been lost or stolen
+  trigger: Real Time
   condition:
-    - [condition 1]
-    - [condition 2]
+    - Asset triggers incident response
+    - Confirmed via employee: asset is confirmed missing or remains outside of geofence without constant employee feedback that the asset is secured
+    - Employee has been deemed compromised and management gives authorization to remote wipe
   action:
-    - severity: [critical | high | medium | low]
-    - alert: [channel/method]
-    - auto_remediate: [true | false]
-  sla: [time period]
+    - severity: high
+    - alert: SOC Report, automatic level 2 (High) priority alarm
+    - auto_remediate: False - to be reviewed by Security Administrator
+  sla: 30 minutes
 ```
 
 ### 3.5 Alert and Response Workflow
 
 ```
-[ASCII diagram of alert workflow]
+DETECTION
+    |
+    v
+RULE-003 / ASSET RED
+    |
+    v
+HIGH / LEVEL 2 SOC ALERT
+    |
+    v
+EMPLOYEE STATUS VERIFICATION
+    |
+    +---- Asset recovered/secured ----> Monitor / Close
+    |
+    +---- Missing / stolen -----------> Security Administrator
+    |
+    +---- Outside geofence + no confirmation
+    |                                  |
+    |                                  v
+    |                         Incident Investigation
+    |                                  |
+    |                                  v
+    |                         Management Authorization?
+    |                                  |
+    |                         +--------+--------+
+    |                         |                 |
+    |                        NO                YES
+    |                         |                 |
+    |                         v                 v
+    |                   Continue          Remote Wipe
+    |                   Investigation          |
+    |                                         v
+    +----------------------------------- Incident Closure
+                                              |
+                                              v
+                                        GRC Evidence
 ```
 
 | Alert Type | Recipient | Response SLA | Escalation |
 |------------|-----------|--------------|------------|
-| | | | |
-| | | | |
+| High (2) | SOC | 30 Minutes | Security Admin |
 
 ---
 
@@ -131,20 +276,20 @@ This automates monitoring and has manual interaction for incident response.
 
 | Evidence Type | Format | Generation | Storage | Retention |
 |---------------|--------|------------|---------|-----------|
-| | JSON/PDF/CSV | Real-time/Daily | | |
-| | | | | |
-| | | | | |
+| Log | JSON | Real-time | Local and Remote | Biannually |
+| rsyslog | RainerScript | Real-Time | Local and Remote | Biannually |
 
 ### 4.2 Auditor-Ready Reports
 
 | Report Name | Contents | Frequency | Automation Level |
 |-------------|----------|-----------|------------------|
-| | | | Full/Partial |
-| | | | |
-| | | | |
+| Assets: Monthly | Incident Report | Monthly | Full |
+| Assets: Quarterly | Incident Report | Quarterly | Full |
+| Assets: Annual | Incident Report | Annually | Full |
 
 ### 4.3 Evidence Integrity
-[How is evidence protected from tampering?]
+All evidence logs generated have a hash associated with the data file.
+The tickets generated in the SOC reference the hash value for ease of access, and this can be used for file integrity verification.
 
 ---
 
