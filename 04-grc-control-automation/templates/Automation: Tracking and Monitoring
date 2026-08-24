@@ -9,7 +9,6 @@
 | Version | 1.0 |
 | Date | 8/24/2026 |
 
----
 
 ## 1. Control Overview
 
@@ -24,20 +23,20 @@ References: None.
 ### 1.2 Control Intent
 The security control is establishing a set of rules pertaining to asset protection. In this case, it's for tracking asset location and movement of company devices that are to stay within designated zones. This is to satisfy control PE-20 and remain compliant under NIST 800-53 standards.
 
-```
+
 | Objective | Description |
 |-----------|-------------|
 | Primary | Monitor and track devices |
 | Secondary | Security logs showing breach in compliance |
 | Compliance | Maintain 800-53 compliance with supporting artifacts |
-```
+
 
 ### 1.3 Current Implementation
 Currently, the company uses the software known as NinjaOne. This provides asset tracking to endpoint management, tracking assets in real time.
 SOC alerts are configured within the software to provide updates when the asset is unreachable or breaches the set geofence boundary.
 This automates monitoring and has manual interaction for incident response.
 
----
+
 
 ## 2. Current State Analysis
 
@@ -68,7 +67,7 @@ This automates monitoring and has manual interaction for incident response.
 | Windows Application Logs | Automatic | Cold Storage | Secondary remote backup site required |
 | Location Data Logs | Automatic | Cold Storage | Secondary remote backup site required |
 
----
+
 
 ## 3. Automation Design
 
@@ -187,17 +186,17 @@ CONTROL FLOW
    +--> Uses accumulated evidence to demonstrate continuous monitoring
        and support PE-20 assessment activities.
 
-```
-[ASCII diagram of automated solution]
-```
+
 
 ### 3.2 Data Sources
+
 
 | Source System | Data Collected | Collection Method | Frequency |
 |---------------|----------------|-------------------|-----------|
 | Laptop1 | Location Data | Agent | At All Times |
 | Laptop2 | Location Data | Agent | At All Times |
 | Laptop3 | Location Data | Agent | At All Times |
+
 
 ### 3.3 Processing Logic
 
@@ -207,9 +206,13 @@ CONTROL FLOW
 | RULE-002 | Yellow | Incident response protocol | Medium |
 | RULE-003 | Red | Remote wipe of the asset | High |
 
+
 ### 3.4 Detection Rules (YAML Format)
 
-```yaml
+
+```
+
+yaml
 # Rule Template
 - rule_id: RULE-003
   name: Asset Red
@@ -224,6 +227,7 @@ CONTROL FLOW
     - alert: SOC Report, automatic level 2 (High) priority alarm
     - auto_remediate: False - to be reviewed by Security Administrator
   sla: 30 minutes
+
 ```
 
 ### 3.5 Alert and Response Workflow
@@ -266,11 +270,12 @@ EMPLOYEE STATUS VERIFICATION
                                         GRC Evidence
 ```
 
+
 | Alert Type | Recipient | Response SLA | Escalation |
 |------------|-----------|--------------|------------|
 | High (2) | SOC | 30 Minutes | Security Admin |
 
----
+
 
 ## 4. Evidence Generation
 
@@ -293,7 +298,7 @@ EMPLOYEE STATUS VERIFICATION
 All evidence logs generated have a hash associated with the data file.
 The tickets generated in the SOC reference the hash value for ease of access, and this can be used for file integrity verification.
 
----
+
 
 ## 5. What Remains Manual
 
@@ -313,7 +318,7 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 | Remote Wipe Authorization | None | Authorization for remote wipe |
 | Incident Closing | Ticket Template | Additional Information Required | 
 
----
+
 
 ## 6. Technology Stack
 
@@ -334,7 +339,7 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 |--------|-----------------|-----------|----------------|
 | Any Remote Asset | Agent | In | API Key |
 
----
+
 
 ## 7. Residual Risk Assessment
 
@@ -348,6 +353,8 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 | Delayed incident response                           | High              | Medium           | 50%       |
 | Lack of auditable asset-location evidence           | Medium            | Low              | 70%       |
 
+
+
 ### 7.2 Residual Risks
 
 | Risk                              | Description                                                                                                                 | Mitigation                                                                                                                                                 | Acceptance |
@@ -356,6 +363,7 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 | Geolocation inaccuracy            | Location data may be inaccurate or insufficient to determine whether an asset has crossed a control-zone boundary.          | Use defined geofence tolerances and require employee/Security Administrator verification before escalation or remediation.                                 | Required   |
 | Employee confirmation unavailable | An employee may be unreachable or unable to confirm whether the asset is secured.                                           | Escalate the event to the SOC and Security Administrator rather than treating lack of confirmation as automatic authorization for destructive remediation. | Required   |
 | Unauthorized remote wipe decision | A remote wipe could destroy evidence or disrupt legitimate recovery efforts if performed incorrectly.                       | Maintain `auto_remediate: False`; require Security Administrator review and management authorization.                                                      | Required   |
+
 
 
 ### 7.3 Automation-Introduced Risks
@@ -369,7 +377,7 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 | Configuration error | Incorrect zones, asset assignments, alert thresholds, or rule configuration could produce inaccurate compliance results.                                                           | Implement configuration change control, administrative review, testing, and periodic validation of geofences and RULE-003 parameters.                               |
 
 
----
+
 
 ## 8. Implementation Plan
 
@@ -381,6 +389,8 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 | 2 | Verification | 1 day | SOC Team |
 | 3 | Live Feed | Continuous | Active Internet Connection |
 
+
+
 ### 8.2 Success Criteria
 
 | Metric | Current | Target | Measurement |
@@ -390,10 +400,12 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 | Evidence coverage | 100% | 100% | Successful Automation with target FP rate achieved|
 | Manual effort | Minimal | Maximized | Number of Tasks requiring Human interaction |
 
-### 8.3 Rollback Plan
-Previous solution was a software VPN with location data feeding live into the SOC. In the event of 3rd party compromise, we revert to previous solution.
 
----
+### 8.3 Rollback Plan
+Previous solution was a software VPN with location data feeding live into the SOC. 
+In the event of 3rd party compromise, we revert to previous monitoring and tracking solution.
+
+
 
 ## 9. Monitoring and Maintenance
 
@@ -415,7 +427,7 @@ Previous solution was a software VPN with location data feeding live into the SO
 | Evidence review          | Monthly; additionally following security incidents or control failures                                 | GRC / Security Administrator |
 
 
----
+
 
 ## Approval
 
