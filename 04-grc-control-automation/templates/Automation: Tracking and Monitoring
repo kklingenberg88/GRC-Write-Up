@@ -30,6 +30,7 @@ The security control is establishing a set of rules pertaining to asset protecti
 | Secondary | Security logs showing breach in compliance |
 | Compliance | Maintain 800-53 compliance with supporting artifacts |
 
+
 ### 1.3 Current Implementation
 Currently, the company uses the software known as NinjaOne. This provides asset tracking to endpoint management, tracking assets in real time.
 SOC alerts are configured within the software to provide updates when the asset is unreachable or breaches the set geofence boundary.
@@ -299,17 +300,17 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 
 | Activity | Current State | Target State | Justification for Manual |
 |----------|---------------|--------------|-------------------------|
-| | Manual | Automated | |
-| | Manual | Manual | [Why it can't/shouldn't be automated] |
-| | | | |
+| Log collection | Automated | Automated | N/A |
+| Action Required | Manual | Manual | Judgement or Authorization Required |
+| Incident Closing | Manual | Manual | Reasoning or Insight Required |
 
 ### 5.2 Human Decision Points
-[Where does human judgment remain required?]
 
 | Decision Point | Automation Support | Human Responsibility |
 |----------------|-------------------|---------------------|
-| | | |
-| | | |
+| Incident Response | Ticket Generation | Inquiry and Escalation |
+| Remote Wipe Authorization | None | Authorization for remote wipe |
+| Incident Closing | Ticket Template | Additional Information Required | 
 
 ---
 
@@ -319,19 +320,18 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 
 | Component | Technology Options | Selected | Justification |
 |-----------|-------------------|----------|---------------|
-| Data Collection | | | |
-| Data Storage | | | |
-| Policy Engine | | | |
-| Alerting | | | |
-| Dashboards | | | |
-| Evidence Generation | | | |
+| Data Collection | OpenNinja | Yes | Data Collection Software |
+| Data Storage | Encrypted drive | Yes | Data Storage |
+| Policy Engine | Location | Yes | Handles Compliance Requirements |
+| Alerting | OpenNinja | Yes | Active Monitoring and Alerts |
+| Dashboards | SIEM | Yes | Action Items for Incident Response |
+| Evidence Generation | OpenNinja & rsyslog | Yes | Supporting Artifacts |
 
 ### 6.2 Integration Points
 
 | System | Integration Type | Data Flow | Authentication |
 |--------|-----------------|-----------|----------------|
-| | API/Agent/File | In/Out/Both | |
-| | | | |
+| Any Remote Asset | Agent | In | API Key |
 
 ---
 
@@ -339,26 +339,34 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 
 ### 7.1 Risks Addressed by Automation
 
-| Risk | Before Automation | After Automation | Reduction |
-|------|-------------------|------------------|-----------|
-| | High/Med/Low | High/Med/Low | % |
-| | | | |
+| Risk                                                | Before Automation | After Automation | Reduction |
+| --------------------------------------------------- | ----------------- | ---------------- | --------- |
+| Lost or stolen asset remains undetected             | High              | Low              | 75%       |
+| Unauthorized asset movement outside designated zone | High              | Low              | 75%       |
+| Delayed SOC notification                            | High              | Low              | 80%       |
+| Delayed incident response                           | High              | Medium           | 50%       |
+| Lack of auditable asset-location evidence           | Medium            | Low              | 70%       |
 
 ### 7.2 Residual Risks
 
-| Risk | Description | Mitigation | Acceptance |
-|------|-------------|------------|------------|
-| | | | Required/Not Required |
-| | | | |
-| | | | |
+| Risk                              | Description                                                                                                                 | Mitigation                                                                                                                                                 | Acceptance |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| Loss of telemetry                 | A laptop may lose network connectivity, power, or monitoring-agent functionality and therefore stop reporting its location. | Monitor agent health and last-seen timestamps; generate an exception when expected telemetry is absent.                                                    | Required   |
+| Geolocation inaccuracy            | Location data may be inaccurate or insufficient to determine whether an asset has crossed a control-zone boundary.          | Use defined geofence tolerances and require employee/Security Administrator verification before escalation or remediation.                                 | Required   |
+| Employee confirmation unavailable | An employee may be unreachable or unable to confirm whether the asset is secured.                                           | Escalate the event to the SOC and Security Administrator rather than treating lack of confirmation as automatic authorization for destructive remediation. | Required   |
+| Unauthorized remote wipe decision | A remote wipe could destroy evidence or disrupt legitimate recovery efforts if performed incorrectly.                       | Maintain `auto_remediate: False`; require Security Administrator review and management authorization.                                                      | Required   |
+
 
 ### 7.3 Automation-Introduced Risks
 
-| Risk | Description | Mitigation |
-|------|-------------|------------|
-| Automation failure | | |
-| False positives | | |
-| | | |
+| Risk                | Description                                                                                                                                                                        | Mitigation                                                                                                                                                          |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Automation failure  | Failure of OpenNinja, the endpoint agent, communications path, geofence engine, or alerting pipeline could prevent a breach from being detected or reported.                       | Monitor system health and telemetry freshness; maintain logging and alerting for failed monitoring components; establish manual verification procedures.            |
+| False positives     | Legitimate asset movement may be incorrectly interpreted as a zone breach because of geolocation inaccuracies, temporary connectivity issues, or incorrect geofence configuration. | Require employee verification and Security Administrator review before incident escalation or remote wipe.                                                          |
+| False negatives     | An asset could leave an authorized zone without generating an alert because telemetry is unavailable or the geofence is incorrectly configured.                                    | Monitor last-seen status, validate geofence configuration, periodically test RULE-003, and maintain manual asset-accountability procedures.                         |
+| Privacy exposure    | Continuous location monitoring creates information about employee and asset movement that may exceed the minimum information required for security purposes.                       | Limit collection to the security objective, restrict access to authorized personnel, establish retention requirements, and obtain appropriate privacy/legal review. |
+| Configuration error | Incorrect zones, asset assignments, alert thresholds, or rule configuration could produce inaccurate compliance results.                                                           | Implement configuration change control, administrative review, testing, and periodic validation of geofences and RULE-003 parameters.                               |
+
 
 ---
 
@@ -368,21 +376,21 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 
 | Phase | Scope | Duration | Dependencies |
 |-------|-------|----------|--------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
+| 1 | Installation | 7 days | IT Administrator Authorization |
+| 2 | Verification | 1 day | SOC Team |
+| 3 | Live Feed | Continuous | Active Internet Connection |
 
 ### 8.2 Success Criteria
 
 | Metric | Current | Target | Measurement |
 |--------|---------|--------|-------------|
-| Detection time | | | |
-| False positive rate | | | |
-| Evidence coverage | | | |
-| Manual effort | | | |
+| Detection time | 30 Minutes | 30 Minutes | Time |
+| False positive rate | 0.1% | 0.001% | Incidents per Month |
+| Evidence coverage | 100% | 100% | Successful Automation with target FP rate achieved|
+| Manual effort | Minimal | Maximized | Number of Tasks requiring Human interaction |
 
 ### 8.3 Rollback Plan
-[What happens if automation fails?]
+Previous solution was a software VPN with location data feeding live into the SOC. In the event of 3rd party compromise, we revert to previous solution.
 
 ---
 
@@ -390,28 +398,21 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 
 ### 9.1 Automation Health Monitoring
 
-| Metric | Threshold | Alert |
-|--------|-----------|-------|
-| Job execution success | | |
-| Data freshness | | |
-| Alert volume | | |
+| Metric                | Threshold                                                                                                                                           | Alert                                                                                                                |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Job execution success | Any scheduled monitoring job fails, terminates unexpectedly, or exceeds its expected execution window                                               | SOC / Security Administrator alert                                                                                   |
+| Data freshness        | No telemetry received from a monitored asset within the defined monitoring interval, or monitoring data exceeds the established freshness threshold | Security Administrator alert; investigate endpoint, agent, or communications failure                                 |
+| Alert volume          | Significant deviation from established baseline, including an unexpected increase or decrease in RULE-003 alerts                                    | SOC alert; investigate potential configuration issue, geofence change, telemetry failure, or abnormal asset activity |
+
 
 ### 9.2 Ongoing Maintenance
 
-| Activity | Frequency | Owner |
-|----------|-----------|-------|
-| Rule tuning | | |
-| Integration health check | | |
-| Evidence review | | |
+| Activity                 | Frequency                                                                                              | Owner                        |
+| ------------------------ | ------------------------------------------------------------------------------------------------------ | ---------------------------- |
+| Rule tuning              | Monthly and following confirmed false positives, false negatives, or significant environmental changes | Security Administrator       |
+| Integration health check | Daily automated health check; formal review monthly                                                    | Security Administrator / SOC |
+| Evidence review          | Monthly; additionally following security incidents or control failures                                 | GRC / Security Administrator |
 
----
-
-## 10. Appendices
-
-### A. Current Process Flow Diagram
-### B. Proposed Architecture Diagram
-### C. Rule Specification Details
-### D. Evidence Samples
 
 ---
 
@@ -419,6 +420,6 @@ The tickets generated in the SOC reference the hash value for ease of access, an
 
 | Role | Name | Date | Signature |
 |------|------|------|-----------|
-| GRC Lead | | | |
-| Engineering Lead | | | |
-| Compliance | | | |
+| GRC Lead | Kevin Klingenberg | 8/25/2026 | X |
+| Engineering Lead | Jay Scarrozo | 8/25/2026 | X |
+| Compliance | Alan Schulk | 8/25/2026 | X |
