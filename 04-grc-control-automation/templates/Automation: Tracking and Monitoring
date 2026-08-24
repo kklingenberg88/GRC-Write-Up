@@ -3,30 +3,37 @@
 ## Document Information
 | Field | Value |
 |-------|-------|
-| Control Name | [Control Name] |
-| Framework Reference | [SOC 2/PCI DSS/ISO 27001 etc.] |
-| Author | [Your Name] |
+| Control Name |  PE-20 ASSET MONITORING AND TRACKING |
+| Framework Reference | 800-53 |
+| Author | Kevin Klingenberg |
 | Version | 1.0 |
-| Date | [Date] |
+| Date | 8/24/2026 |
 
 ---
 
 ## 1. Control Overview
 
 ### 1.1 Control Statement
-[Original control language from framework]
+ASSET MONITORING AND TRACKING
+Control: Employ tracking measures to monitor the location and movement of Emerald Retail assets within Emerald Retail designated control zones.
+Discussion: Asset location technologies can help ensure that critical assets—including vehicles, equipment, and system components—remain in authorized locations. Organizations consult with the Office of the General Counsel and senior agency official for privacy regarding the deployment and use of asset location technologies to address potential privacy concerns.
+Related Controls: CM-8, PE-16, PM-8.
+Control Enhancements: None.
+References: None.
 
 ### 1.2 Control Intent
-[What is this control actually trying to achieve?]
+The security control is establishing a set of rules pertaining to asset protection. In this case, it's for tracking asset location and movement of company devices that are to stay within designated zones. This is to satisfy control PE-20 and remain compliant under NIST 800-53 standards.
 
 | Objective | Description |
 |-----------|-------------|
-| Primary | |
-| Secondary | |
-| Compliance | |
+| Primary | Monitor and track devices |
+| Secondary | Security logs showing breach in compliance |
+| Compliance | Maintain 800-53 compliance with supporting artifacts |
 
 ### 1.3 Current Implementation
-[How is this control currently implemented?]
+Currently, the company uses the software known as NinjaOne. This provides asset tracking to endpoint management, tracking assets in real time.
+SOC alerts are configured within the software to provide updates when the asset is unreachable or breaches the set geofence boundary.
+This automates monitoring and has manual interaction for incident response.
 
 ---
 
@@ -36,21 +43,21 @@
 
 | Step | Action | Owner | Frequency | Time Required |
 |------|--------|-------|-----------|---------------|
-| 1 | | | | |
-| 2 | | | | |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
+| 1 | Install NinjaOne Agent | IT Admin | Once | 10 minutes |
+| 2 | Confirm Data Flow | SOC Analysts | Once | 1-5 minutes |
+| 3 | Incident Response | SOC/Security Team | As Needed | 30 minutes |
+| 4 | Documentation | Security Team | As Needed | 10 minutes |
+| 5 | Uninstall NinjaOne Agent | IT Admin | Once | 5 minutes |
 
 ### 2.2 Failure Point Analysis
 
 | Step | Failure Mode | Likelihood | Impact | Detection |
 |------|--------------|------------|--------|-----------|
-| 1 | | High/Med/Low | | Never/Late/Immediate |
-| 2 | | | | |
-| 3 | | | | |
-| 4 | | | | |
-| 5 | | | | |
+| 1 | Agent Installation Failure | Low | Low | Immediate |
+| 2 | Logs not forwarding | Low | Low | Immediate |
+| 3 | Incident Response | Medium | Low - High | Immediate |
+| 4 | Break in Audit Trail | Low | High | Immediate |
+| 5 | Agent uninstall failure | Low | Low | Immediate |
 
 ### 2.3 Current Evidence Collection
 [How is evidence currently gathered and stored?]
