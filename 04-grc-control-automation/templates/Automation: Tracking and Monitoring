@@ -24,12 +24,13 @@ References: None.
 ### 1.2 Control Intent
 The security control is establishing a set of rules pertaining to asset protection. In this case, it's for tracking asset location and movement of company devices that are to stay within designated zones. This is to satisfy control PE-20 and remain compliant under NIST 800-53 standards.
 
+```
 | Objective | Description |
 |-----------|-------------|
 | Primary | Monitor and track devices |
 | Secondary | Security logs showing breach in compliance |
 | Compliance | Maintain 800-53 compliance with supporting artifacts |
-
+```
 
 ### 1.3 Current Implementation
 Currently, the company uses the software known as NinjaOne. This provides asset tracking to endpoint management, tracking assets in real time.
