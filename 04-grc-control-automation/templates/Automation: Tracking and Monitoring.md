@@ -208,8 +208,6 @@ CONTROL FLOW
 
 ### 3.4 Detection Rules (YAML Format)
 
-
-yaml
 # Rule Template
 - rule_id: RULE-003
   name: Asset Red
