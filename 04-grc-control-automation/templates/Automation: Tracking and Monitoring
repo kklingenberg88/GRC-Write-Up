@@ -210,8 +210,6 @@ CONTROL FLOW
 ### 3.4 Detection Rules (YAML Format)
 
 
-```
-
 yaml
 # Rule Template
 - rule_id: RULE-003
@@ -228,11 +226,11 @@ yaml
     - auto_remediate: False - to be reviewed by Security Administrator
   sla: 30 minutes
 
-```
+
 
 ### 3.5 Alert and Response Workflow
 
-```
+
 DETECTION
     |
     v
@@ -268,7 +266,7 @@ EMPLOYEE STATUS VERIFICATION
                                               |
                                               v
                                         GRC Evidence
-```
+
 
 
 | Alert Type | Recipient | Response SLA | Escalation |
