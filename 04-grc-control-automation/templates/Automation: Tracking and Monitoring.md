@@ -72,7 +72,6 @@ This automates monitoring and has manual interaction for incident response.
 ## 3. Automation Design
 
 ### 3.1 Architecture Overview
-AUTOMATED ASSET MONITORING & TRACKING
 Control: PE-20 — Asset Monitoring and Tracking
 Environment: Emerald Retail
 ======================================================================
