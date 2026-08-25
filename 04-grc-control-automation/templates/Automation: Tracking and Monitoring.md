@@ -44,21 +44,21 @@ This automates monitoring and has manual interaction for incident response.
 
 | Step | Action | Owner | Frequency | Time Required |
 |------|--------|-------|-----------|---------------|
-| Install NinjaOne Agent | IT Admin | Once | 10 minutes |
-| Confirm Data Flow | SOC Analysts | Once | 1-5 minutes |
-| Incident Response | SOC/Security Team | As Needed | 30 minutes |
-| Documentation | Security Team | As Needed | 10 minutes |
-| Uninstall NinjaOne Agent | IT Admin | Once | 5 minutes |
+| 1 | Install NinjaOne Agent | IT Admin | Once | 10 minutes |
+| 2 | Confirm Data Flow | SOC Analysts | Once | 1-5 minutes |
+| 3 | Incident Response | SOC/Security Team | As Needed | 30 minutes |
+| 4 | Documentation | Security Team | As Needed | 10 minutes |
+| 5 | Uninstall NinjaOne Agent | IT Admin | Once | 5 minutes |
 
 ### 2.2 Failure Point Analysis
 
 | Step | Failure Mode | Likelihood | Impact | Detection |
 |------|--------------|------------|--------|-----------|
-| Agent Installation Failure | Low | Low | Immediate |
-| Logs not forwarding | Low | Low | Immediate |
-| Incident Response | Medium | Low - High | Immediate |
-| Break in Audit Trail | Low | High | Immediate |
-| Agent uninstall failure | Low | Low | Immediate |
+| 1 | Agent Installation Failure | Low | Low | Immediate |
+| 2 | Logs not forwarding | Low | Low | Immediate |
+| 3 | Incident Response | Medium | Low - High | Immediate |
+| 4 | Break in Audit Trail | Low | High | Immediate |
+| 5 | Agent uninstall failure | Low | Low | Immediate |
 
 ### 2.3 Current Evidence Collection
 
